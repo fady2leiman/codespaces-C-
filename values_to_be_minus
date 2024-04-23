@@ -1,0 +1,11 @@
+  //values to be minus one
+  public static int[] InvertValues(int[] input)
+  {
+      List<int> output = new List<int>();
+
+      foreach (int i in input)
+      {
+          output.Add(i * -1);
+      }
+      return output.ToArray();
+  }

@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace Regex
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string  text= "I saw the cars XYZ789 and ABC123 parked near My My."; 
+            List<string> lst = new List<string>();
+
+            Match m;
+            // find match
+            foreach (string s in text.Split(' '))
+            {
+                m = System.Text.RegularExpressions.Regex.Match(s, @"^[A-Z]{3}\d{3}$"); //"Car String"
+                
+                if (m.Success)
+                    lst.Add(m.Value);
+            }
+            Console.WriteLine(lst[0], lst[1]);
+
+            // "Email with  "." (period), " - " (hyphen), and "_" (underscore) accepted"
+            //m = System.Text.RegularExpressions.Regex.Match(s, @"^[a-zA-Z0-9\.\-_]+$"); 
+
+            //You can use the following regular expression to match strings that contain only letters, numbers, periods (.), hyphens (-), and underscores(_) each occurring not more than one time, not starting or ending with a period, not containing any other special characters, and not containing a slash(/),and not containing(@):
+            //@"^(?!.*\.\.)(?!.*--)(?!.*__)(?!.*\/)(?!.*@)[a-zA-Z\d.-_]*[a-zA-Z\d](?<!\.)$")
+
+
+
+            //find repeated 
+
+            //string previous = "";
+            //int ss = previous.Length;
+            //// Write your code here
+            //text = new string(text.Where(c => !char.IsPunctuation(c)).ToArray());
+
+            //foreach (string s in text.Split(' '))
+            //{
+            //    if (s.ToLower().Equals(previous.ToLower()))
+            //        lst.Add(previous);
+            //    else
+            //        previous = s;
+            //}
+            //Console.WriteLine(lst[0]);
+
+            string emailString = "johnde";
+            string[] tdls = { "com", "se", "fr" };
+                string[] emailParts = emailString.Split('@');
+            // take and validate the first part.
+            if (!Level1LocalPartValidation(emailParts[0]))
+                Console.WriteLine("false");
+                if (emailParts.Length>1 ||  emailParts[1]!=null && emailParts[1].Length > 253)
+                Console.WriteLine("false");
+            //split based on hyphen
+            string[] secondPart = emailParts[1].Split('.');
+                var match = System.Text.RegularExpressions.Regex.Match(secondPart[0], @"^(?!.*\.\.)(?!.*--)(?!.*__)(?!.*\/)(?!.*@)[a-zA-Z\d.-_]*[a-zA-Z\d](?<!\.)$");
+                if (!match.Success)
+                Console.WriteLine("false");
+
+            if ( secondPart[1] != null && !tdls.Contains(secondPart[1]))
+                Console.WriteLine("false");
+            else Console.WriteLine("true");
+        
+        }
+
+        public static bool Level1LocalPartValidation(string localPart)
+        { 
+            var match = System.Text.RegularExpressions.Regex.Match(localPart, @"^(?!.*\.\.)(?!.*--)(?!.*__)(?!.*\/)(?!.*@)[a-zA-Z\d.-_]*[a-zA-Z\d](?<!\.)$");
+            if (localPart.Length > 64)
+                return false;
+            if (!match.Success)
+                return false;
+            else
+                return true;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> intList = new List<int> { 3, 4, 4, 4, 2, 2, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5,5,5 };
+            Dictionary<int, int> d = new Dictionary<int, int>();
+            // Write your code here
+             intList.ToList().ForEach (c => {
+                if (d.ContainsKey(c))
+                    d[c] = d[c] + 1;
+                else
+                    d.Add(c, 1); 
+            }) ;
+
+            //return max
+            Console.WriteLine(d.Max(c => c.Value));
+            Console.ReadLine();
+
+        }
+    }
+}

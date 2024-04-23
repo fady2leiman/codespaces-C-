@@ -1,0 +1,70 @@
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+
+public class Program
+{/*
+    
+     rather than nesting for loops, find
+
+        s[i] % k
+
+        you'll have k options, so you can find how many times each remainder option shows up, condensing your entire array down into length k.
+
+        For two items to sum to a multiple of k, their remainders must sum to k. Each value 0 < n < k has only one remainder partner to make a total remainder of 0, so find each set (negative indices are our friend here!) and then pick the higher value from each set and sum it. Make sure you skip k/2 if k is even for now. Then you have two more cases to consider:
+
+        If you have one value with a remainder of 0 and add it to a value with any other remainder, it still will have a non-zero remainder. So if you have any remainder = 0 numbers, you can only include one.
+        If k is even, then k/2 makes k when added to another k/2 number ONLY. So again, if you have any remainder = k/2 numbers, you can only include one.
+
+     
+     */
+
+    //for testing..
+    //15 7
+    //278 576 496 727 410 124 338 149 209 702 282 718 771 575 436
+    //
+    public static int NonDivisibleSubset(int k, List<int> s)
+    {
+        List<int> count = new List<int>(new int[k]);
+        int result = 0;
+        for (int i = 0; i < s.Count; i++)
+        {
+            count[s[i] % k]++;
+        }
+        for (int i = 0; i <= k / 2; i++)
+        {
+            if (i == (k - i) % k)
+                result += Math.Min(count[i], 1);
+            else
+                result += Math.Max(count[i], count[k - i]);
+        }
+        return result;
+    }
+
+    public static void Main(string[] args)
+    { 
+        string[] firstMultipleInput = Console.ReadLine().TrimEnd().Split(' ');
+
+        int n = Convert.ToInt32(firstMultipleInput[0]);
+
+        int k = Convert.ToInt32(firstMultipleInput[1]);
+
+        List<int> s = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(sTemp => Convert.ToInt32(sTemp)).ToList();
+
+        int result = NonDivisibleSubset(k, s);
+
+        Console.WriteLine(result);
+         
+    }
+}

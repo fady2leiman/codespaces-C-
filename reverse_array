@@ -1,0 +1,8 @@
+    //reverse values on string array
+    public static string[] ReverseArray(string[] arr)
+    {
+        Array.Reverse(arr);
+        return arr;
+    }
+
+    
